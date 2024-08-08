@@ -1,0 +1,62 @@
+.container{
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    flex-direction: column;
+    background-color: aquamarine;
+    width: 50vw;
+    height: 60vh;
+}
+
+.container select{
+    display: flex;
+    position: absolute;
+    left: 25%;
+    font-size: large;
+    width: 50%;
+}
+
+.showList{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 23%;
+    height: 45vh;
+    overflow: auto;
+}
+.configurar{
+    display: flex;
+    color: black;
+    /* flex-direction: row; */
+    gap: 10px;
+    font-size: 30px;
+}
+
+.buttonArea {
+    position: absolute; /* Adiciona posicionamento absoluto */
+    bottom: 10px; /* Espaçamento do fundo */
+    right: 10px; /* Espaçamento da direita */
+}
+
+.buttonArea button {
+    border-radius: 23px;
+    width: 10vw;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+    cursor: pointer;
+    height: 3vh;
+    color: black;
+    background-color: white;
+}
+
+.buttonArea button:hover {
+    transition-duration: 500ms;
+    opacity: 0.8;
+    transform: translateY(-11px);
+}
+
+button:disabled {
+    opacity: .3;
+}
+
