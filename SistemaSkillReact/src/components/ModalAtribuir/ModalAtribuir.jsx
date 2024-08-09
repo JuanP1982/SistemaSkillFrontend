@@ -3,16 +3,20 @@ import { listarTodasSkills } from '../../service/skill/skill'
 
 import styles from './ModalAtribuir.module.css'
 
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faClose, faLevelUp, faList, faLongArrowAltUp, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { atribuirSkill } from '../../service/usuario/usuario'
-import { fetchUser } from '../../Hooks/UserHooks'
+import { AuthContext } from '../../contexts/authContext'
+import useFetchUser from '../../Hooks/UserHooks'
+import { ExceptionHook } from '../../Hooks/ExceptionHook'
 
-export const ModalAtribuir = ({close,userId}) => {
-
+export const ModalAtribuir = ({close,userId,reload}) => {
+  const {user} = useContext(AuthContext)
+  const fetchUser = useFetchUser()
   const [skillsDisponiveis, setSkillsDisponiveis] = React.useState([])
   const [skillsAtribuidas, setSkillsAtribuidas] = React.useState([])
+  const [buttonState, setButtonState] = React.useState(true)
 
 
     const handleRemoverSkill = (id) =>{
@@ -20,6 +24,10 @@ export const ModalAtribuir = ({close,userId}) => {
         setSkillsAtribuidas(novaLista)
         return toast.success('Skill Removida da lista com sucesso!')
     }
+
+  useEffect(()=>{
+    skillsAtribuidas.length > 0 ? setButtonState(false) : setButtonState(true)
+  },[skillsAtribuidas])
 
     const handleNivel = (e, selecionada, acao) => {
         const { value } = e.target;
@@ -51,6 +59,11 @@ export const ModalAtribuir = ({close,userId}) => {
         }
       };
 
+      const handleSubstring = (selecionada) =>{
+        const nome =selecionada.skill.nome
+        return nome.length > 37 ? `${nome.substring(0, 37)}...` : nome
+      }
+
       const handleSalvar =  () =>{
         const skillsSalvar = [];
         const niveis = [];
@@ -58,55 +71,72 @@ export const ModalAtribuir = ({close,userId}) => {
             skillsSalvar.push(skill.skill.id)
             niveis.push(skill.nivel)
         })
-        console.log('log atribuidas: ',skillsAtribuidas);
-        
 
         const info = {
             usuarioId: userId,
             skillsId:skillsSalvar,
             niveis:niveis
         }
-        atribuirSkill(info).then((res)=>fetchUser(userId)).catch((err)=>toast.error('Ocorreu um erro ao salvar as skills!'))
+        atribuirSkill(info).then((res)=>fetchUser(userId))
+        .catch((err)=>toast.error(ExceptionHook(err)))
         toast.success('Skills atribuidas com sucesso!')
-        close()
+        console.log("Skills 'novas'", user.skills);
+        setSkillsAtribuidas([])
+        reload(user.skills)        
       }
 
-  useEffect(()=>{
-    listarTodasSkills().then((res)=>setSkillsDisponiveis(res.data))
-  },[])
+      useEffect(() => {
+        listarTodasSkills().then((res) => {
+          
+          console.log("Skills iniciais: ",user.skills);
+          
+          const novaLista = res.data.filter((skillRes) =>
+            !user.skills.some((skillUser) => skillUser.skill.id === skillRes.id)
+          );
+          
+          setSkillsDisponiveis(novaLista);
+        });
+      }, [user.skills]);
+
     return (
-    <div  className={styles.container}>
+    <div  className={styles.containerModal}>
+      <div className={styles.conteudoModal}>
         <div className={styles.conteudo}>
-        <select  multiple onChange={handleChange}>
-            <option disabled>Selecione uma skill</option>
+          <div className={styles.header}>
+        <select  onChange={handleChange}>
+            <option selected disabled>Selecione uma skill</option>
             {skillsDisponiveis.map((skill)=>
             <option id={skill.id} value={skill.id} >{skill.nome}</option>
             )}
         </select>
+        <FontAwesomeIcon onClick={close} className={styles.closeIcon} icon={faClose}/>
+        </div>
         <div className={styles.showList}>
         {skillsAtribuidas.map((selecionada)=>
+          
             <div className={styles.configurar}>
-             <table>
-                <tr>
-                    <td>{selecionada.skill.nome}</td>
-                    <td>
-                    <span>
+                    <div className={styles.nomeArea}>
+                    <FontAwesomeIcon className={styles.iconeLista} icon={faList}/>
+                      {handleSubstring(selecionada)}
+                      </div>
+                    <div className={styles.nivelArea}>
+                    <span >
+                      <FontAwesomeIcon icon={faLongArrowAltUp}/>
                       <button onClick={(e) => handleNivel(e, selecionada, 'adicionar')}>+</button>
                       {selecionada.nivel}
                       <button onClick={(e) => handleNivel(e, selecionada, 'remover')}>-</button>
                     </span>
-                    </td>
-                    <td>
-                        <FontAwesomeIcon onClick={()=>handleRemoverSkill(selecionada.skill.id)} icon={faTrash}/>
-                    </td>
-                </tr>
-             </table>
+                    </div>
+                    <div className={styles.botaoRemover}>
+                        <FontAwesomeIcon style={{cursor:'pointer'}} onClick={()=>handleRemoverSkill(selecionada.skill.id)} icon={faTrash}/>
+                    </div>
              </div>
         )}
-            </div>
             <div className={styles.buttonArea}>
-            <button onClick={handleSalvar} type='button'>Atribuir skills</button>
+            <button onClick={handleSalvar} disabled={buttonState} type='button'>Atribuir skills</button>
             </div>
+            </div>
+        </div>
         </div>
         <ToastContainer/>
     </div>

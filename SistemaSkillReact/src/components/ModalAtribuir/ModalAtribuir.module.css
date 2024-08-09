@@ -1,19 +1,56 @@
-.container{
+.containerModal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fbf7f70f;
+    backdrop-filter: blur(5px);
+    width: auto;
+    overflow: none;
+}
+
+.conteudoModal{
     display: flex;
     justify-self: center;
     align-self: center;
     flex-direction: column;
-    background-color: aquamarine;
+    background-color: rgb(47, 51, 50);
     width: 50vw;
     height: 60vh;
+    border-radius: 23px;
 }
 
-.container select{
+.conteudoModal select{
+    display: flex;
+    position: relative;
+    font-size: large;
+    border-radius: 23px;
+    width: 50%;
+    background-color: rgb(114, 113, 112);
+} 
+
+.header {
+    display: flex;
+}
+
+.header .closeIcon{
     display: flex;
     position: absolute;
-    left: 25%;
-    font-size: large;
-    width: 50%;
+    flex-grow: 2;
+    width: 20px;
+    height: 20px;
+    right: 26vw;
+    top: 20.5vh;
+    cursor: pointer;
+}
+
+.header .closeIcon:hover{
+    transition: 500ms;
+    height: 25px;
 }
 
 .showList{
@@ -26,16 +63,48 @@
 }
 .configurar{
     display: flex;
-    color: black;
+    color: rgb(255, 255, 255);
     /* flex-direction: row; */
     gap: 10px;
     font-size: 30px;
+    
 }
 
+.nomeArea{
+    display: flex;
+    align-items: center;
+    width: 30vw;
+    gap: 5px;
+}
+
+.nomeArea .iconeLista{
+    size: 5px;
+}
+
+.nivelArea{
+    display: flex;
+    flex-grow: 1;
+}
+
+.nivelArea button{
+    margin-left: 5px;
+}
+
+
+.botaoRemover{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    
+    margin-right: 10px;
+}
+
+
+
 .buttonArea {
-    position: absolute; /* Adiciona posicionamento absoluto */
-    bottom: 10px; /* Espaçamento do fundo */
-    right: 10px; /* Espaçamento da direita */
+    position: absolute;
+    bottom: 10px; 
+    right: 10px; 
 }
 
 .buttonArea button {
@@ -46,7 +115,7 @@
     box-shadow: 0 0 10px rgba(0,0,0,.1);
     cursor: pointer;
     height: 3vh;
-    color: black;
+    color: rgb(7, 7, 7);
     background-color: white;
 }
 
@@ -56,7 +125,9 @@
     transform: translateY(-11px);
 }
 
-button:disabled {
+.buttonArea button:disabled {
     opacity: .3;
 }
+
+
 

@@ -6,6 +6,8 @@ import { loginApi } from '../../service/usuario/usuario'
 import { AuthContext } from '../../contexts/authContext'
 import { recuperarItem } from '../../service/localStorage'
 import { Link, useNavigate } from 'react-router-dom'
+import { ExceptionHook } from '../../Hooks/ExceptionHook'
+import { toast, ToastContainer } from 'react-toastify'
 
 
 
@@ -40,13 +42,13 @@ export const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault()
-    const res =  loginApi(userInfo).then((res)=>{
+    loginApi(userInfo).then((res)=>{
       console.log(res);
       
       salvarUser(res.data.usuario)
       localStorage.setItem('token', res.data.token)
       navigate('/home')
-    }).catch((err)=>console.log(err))
+    }).catch((err)=>toast.error(ExceptionHook(err)))
 
     salvarSenha === true?
     localStorage.setItem('senha',JSON.stringify({senha:btoa(userInfo.senha), salvar:true}))
@@ -57,7 +59,6 @@ export const Login = () => {
   const handleSenhaVisivel = () =>{
     setMostrarSenha(!mostrarSenha)
     mostrarSenha === false? setEstadoSenha("password") : setEstadoSenha("text")
-    return;
   }
 
   return (
@@ -86,6 +87,7 @@ export const Login = () => {
           </div>
         </form>
     </div>
+    <ToastContainer/>
     </div>
   )
 }

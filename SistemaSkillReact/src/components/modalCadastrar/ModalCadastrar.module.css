@@ -1,0 +1,151 @@
+.containerModal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fbf7f70f;
+    backdrop-filter: blur(5px);
+    width: auto;
+    overflow: none;
+}
+
+.conteudoModal{
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    flex-direction: column;
+    background-color: rgb(47, 51, 50);
+    backdrop-filter: blur(5px);
+    width: 50vw;
+    height: 60vh;
+    border-radius: 23px;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header h1{
+    font-size: 30px;
+}
+
+.header .closeIcon{
+    flex-grow: 2;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 1vh;
+    right: 1vw;
+    cursor: pointer;
+}
+
+.header .closeIcon:hover{
+    transition: 1000ms;
+    height: 30px;
+}
+
+.conteudo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.conteudo form{
+    display: flex;
+    flex-direction: column;
+    margin-top: 6vh;
+    width: 30vw;
+    height: 30vh;
+    gap: 5px;
+}
+
+.conteudo .nomeArea , .descricaoArea label{
+    display: flex;
+    flex-direction: column;
+    font-size: large;
+}
+
+.conteudo .nomeArea input{
+    height: 4vh;
+    background-color: transparent;
+    border: 1px solid white;
+    outline: none;
+    margin-bottom: 3vh;
+}
+
+.conteudo  input::placeholder, textarea::placeholder{
+    text-align: center;
+}
+
+
+.fileInput {
+    display: none;
+  }
+  
+.customFileUpload {
+    border: 1px solid #ccc;
+    font-size: 15px;
+    text-align: center;
+    display: inline-block;
+    width: 7vw;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+.customFileUploadSelecionado {
+    border: 1px solid #0bff03;
+    text-align: center;
+    color: #0bff03;
+    display: inline-block;
+    width: 7vw;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+.customFileUpload:hover{
+    opacity: .5;
+  }
+  .customFileUpload:checked{
+    border-color: green;
+  }
+
+.conteudo .descricaoArea textarea{
+    min-height: 5vh;
+    max-height: 10vh;
+    width: 30vw;
+    background-color: transparent;
+    border: 1px solid white;
+}
+
+.conteudo form button {
+    position: absolute;
+    bottom: 15px; 
+    right: 15px; 
+}
+
+.conteudo form button {
+    border-radius: 23px;
+    width: 10vw;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+    cursor: pointer;
+    height: 3vh;
+    color: rgb(7, 7, 7);
+    background-color: white;
+}
+
+.conteudo form button:hover {
+    transition-duration: 500ms;
+    opacity: 0.8;
+    transform: translateY(-11px);
+}

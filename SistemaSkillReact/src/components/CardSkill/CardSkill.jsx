@@ -6,7 +6,9 @@ import { atualizarNivel } from '../../service/usuario/usuario';
 export default function Card({props, handleDeletar, handleAtualizar}) {
     const [nivel, setNivel] = React.useState(props.nivel)
     console.log(props.skill);
-    
+    const nomeSkill = props.skill.nome
+    const novoNome =  nomeSkill.length > 37 ? `${nomeSkill.substring(0, 37)}...` : nomeSkill;
+
     const removerSkill = () =>{
         handleDeletar(props.skill.id)
     }
@@ -21,7 +23,7 @@ export default function Card({props, handleDeletar, handleAtualizar}) {
             <div className={styles.imgArea}>
         <img src={props.skill.url}/>
         </div>
-        <p className={styles.title}>{props.skill.nome}</p>
+        <p className={styles.title}>{novoNome}</p>
         <div className={styles.nivel}>
         <p>Nivel: 
           <input onChange={(e)=>setNivel(e.target.value)} max='10' min='0' type='number' defaultValue={nivel}/>

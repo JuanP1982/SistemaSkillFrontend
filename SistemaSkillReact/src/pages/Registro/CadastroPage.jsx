@@ -30,7 +30,7 @@ export const CadastroPage = () => {
 
     cadastroApi(userInfo).then((res)=>{
       toast.success("Cadastro efetuado com sucesso! Redirecionando para o login")
-      setInterval(()=>navigate("/"),3000)
+      setTimeout(()=>navigate("/"),3000)
      })
      .catch((err)=>toast.error('Houve um erro ao cadastrar-se no site'))
     

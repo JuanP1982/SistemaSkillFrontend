@@ -9,23 +9,44 @@ import { useNavigate } from 'react-router-dom'
 import { atualizarNivel, removerSkill } from '../../service/usuario/usuario'
 import { info } from 'autoprefixer'
 import { toast, ToastContainer } from 'react-toastify'
-import { fetchUser } from '../../Hooks/UserHooks'
+import useFetchUser from '../../Hooks/UserHooks'
 import { ModalAtribuir } from '../../components/ModalAtribuir/ModalAtribuir'
+import { ModalCadastrar } from '../../components/modalCadastrar/ModalCadastrar'
 
 
 export const HomePage = () => {
+    const fetchUser = useFetchUser()
     const navigate = useNavigate()
     const {user, salvarUser} = useContext(AuthContext)
     const [modalAtribuir, setModalAtribuir] = React.useState(false)
+    const [modalCadastrar, setModalCadastrar] = React.useState(false)
     const [skills, setSkills] = React.useState(user? user.skills: [])
+    const [dropdownAtribuir, setDropdownAtribuir] = React.useState(false)
+    const [dropdownSkill, setDropdownSkill] = React.useState(false)
     console.log(user);
 
     React.useEffect(()=>{
         setSkills(user.skills)
     },[user])
 
+    const handleDropdownAtribuir = () =>{
+        setDropdownAtribuir(!dropdownAtribuir)
+        dropdownSkill ? setDropdownSkill(false) : null
+    }
+
+    const handleDropdownSkill = () =>{
+        setDropdownSkill(!dropdownSkill)
+        dropdownAtribuir ? setDropdownAtribuir(false) : null
+    }
+
     const handleModalAtribuir = () =>{
         setModalAtribuir(!modalAtribuir)
+        setDropdownAtribuir(false)
+    }
+
+    const handleModalCadastrar = () =>{
+        setModalCadastrar(!modalCadastrar)
+        setDropdownSkill(false)
     }
 
     const handleLogout = () =>{
@@ -43,6 +64,10 @@ export const HomePage = () => {
             setSkills(res.data.skills)
             toast.success('Skill removida com sucesso')
         }).catch((err)=>toast.error('Falha ao remover a skill'))
+    }
+
+    const reloadSkills = (skills) =>{
+        setSkills(skills)
     }
     
     const handleAtualizarNivel = (skill,novoNivel) =>{
@@ -72,8 +97,24 @@ export const HomePage = () => {
             <div className={styles.headerContent}>
             <p>Bem vindo, {user.email.split('@gmail.com')}!</p>
             <ul className={styles.opcoes}>
-                <li >Cadastrar Skill</li>
-                <li onClick={handleModalAtribuir} >Atribuir skill</li>
+                <li onMouseDown={handleDropdownSkill} onMouseOver={handleDropdownSkill} onClick={handleDropdownSkill}>Gerenciar Skills</li>
+                <li onMouseDown={handleDropdownAtribuir} onMouseOver={handleDropdownAtribuir}>Atribuir Skill</li>
+                {dropdownAtribuir &&(
+                    <div className={styles.dropdown}>
+                        <ul className={styles.opcoesDropdown}>
+                            <li onClick={handleModalAtribuir}>Atribuir Skill</li>
+                        </ul>
+                    </div>
+                )}
+                {dropdownSkill &&(
+                    <div className={styles.dropdownSkill}>
+                        <ul className={styles.opcoesDropdown}>
+                            <li onClick={handleModalCadastrar}>Cadastrar Skill</li>
+                            <li onClick={()=>alert('atualizar')}>Editar Skill</li>
+                            <li onClick={()=>alert('remover')}>Remover Skill</li>
+                        </ul>
+                    </div>
+                )}
             </ul>
             <FontAwesomeIcon
             onClick={handleLogout}
@@ -93,7 +134,13 @@ export const HomePage = () => {
 
         {modalAtribuir &&(
             <div className={styles.modalAtribuir}>
-            <ModalAtribuir userId={user.id} close={handleModalAtribuir}></ModalAtribuir>
+            <ModalAtribuir reload={reloadSkills} userId={user.id} close={handleModalAtribuir}></ModalAtribuir>
+            </div>
+        )}
+
+        {modalCadastrar &&(
+            <div className={styles.modalAtribuir}>
+                <ModalCadastrar reload={reloadSkills} userId={user.id} close={handleModalCadastrar}/>
             </div>
         )}
         <ToastContainer/>
