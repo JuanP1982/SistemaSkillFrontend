@@ -15,7 +15,7 @@ import { toast, ToastContainer } from 'react-toastify'
 export const Login = () => {
   const {salvarUser} = useContext(AuthContext)
   const navigate = useNavigate()
-  const [mostrarSenha,setMostrarSenha] = React.useState(false)
+  const [mostrarSenha,setMostrarSenha] = React.useState(true)
   const [estadoSenha,setEstadoSenha] = React.useState('password')
   const [senhaSalva, setSenhaSalva] = React.useState(()=>{
     const senhaRec = recuperarItem('senha')

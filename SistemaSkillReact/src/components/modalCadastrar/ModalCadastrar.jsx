@@ -56,6 +56,7 @@ console.log(arquivo);
                     <label for="file-upload" className={` ${fileSelected? styles.customFileUploadSelecionado: styles.customFileUpload}`}>
                       {fileSelected? <FontAwesomeIcon icon={faCheck}/> : 'Enviar Arquivo'}
                     </label>
+                    <p>{arquivo?.name}</p>
                     <input required id='file-upload' className={styles.fileInput} type="file" onChange={handleFileChange} accept='image/*'/>
                     <button type='submit'>Cadastrar</button>
                 </form>
