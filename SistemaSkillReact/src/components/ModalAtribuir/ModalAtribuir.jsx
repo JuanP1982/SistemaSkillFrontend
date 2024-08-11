@@ -89,6 +89,7 @@ export const ModalAtribuir = ({close,userId,reload}) => {
         listarTodasSkills().then((res) => {
           
           console.log("Skills iniciais: ",user.skills);
+          console.log(res.data);
           
           const novaLista = res.data.filter((skillRes) =>
             !user.skills.some((skillUser) => skillUser.skill.id === skillRes.id)
@@ -121,7 +122,7 @@ export const ModalAtribuir = ({close,userId,reload}) => {
                       </div>
                     <div className={styles.nivelArea}>
                     <span >
-                      <FontAwesomeIcon icon={faLongArrowAltUp}/>
+                      
                       <button onClick={(e) => handleNivel(e, selecionada, 'adicionar')}>+</button>
                       {selecionada.nivel}
                       <button onClick={(e) => handleNivel(e, selecionada, 'remover')}>-</button>

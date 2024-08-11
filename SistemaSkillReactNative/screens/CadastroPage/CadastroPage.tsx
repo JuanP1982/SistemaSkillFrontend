@@ -3,12 +3,12 @@ import React from 'react';
 import {  } from 'react-native-gesture-handler';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faEye, faUser } from '@fortawesome/free-regular-svg-icons';
-import { LoginScreenNavigationProp } from '../../interfaces/TypesUsuario';
+import { CadastroScreenNavigationProp } from '../../interfaces/TypesUsuario';
 import { useNavigation } from '@react-navigation/native';
 import { cadastroApi } from '../../service/usuario/usuario';
 
 export default function CadastroPage() {
-    const navigation = useNavigation<LoginScreenNavigationProp>();
+    const navigation = useNavigation<CadastroScreenNavigationProp>();
     const [email, setEmail] = React.useState('');
     const [senha, setSenha] = React.useState('');
     const [confirmaSenha, setConfirmaSenha] = React.useState('');

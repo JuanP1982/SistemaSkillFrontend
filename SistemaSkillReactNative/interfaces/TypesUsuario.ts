@@ -17,9 +17,19 @@ export interface senhaRecType{
     salvar:boolean
 }
 
+export interface deleteSkillType{
+    usuarioId: number,
+    skillId:number
+}
+
+export interface atualizarNivelType extends deleteSkillType{
+    nivel:number
+}
+
 export type RootStackParamList = {
     Login: undefined;
     Cadastro: undefined;
+    Home: undefined;
 };
 
 export type CadastroScreenNavigationProp = NativeStackNavigationProp<RootStackParamList,'Cadastro'>;

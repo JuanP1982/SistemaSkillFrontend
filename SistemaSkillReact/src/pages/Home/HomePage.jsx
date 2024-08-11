@@ -90,7 +90,7 @@ export const HomePage = () => {
     //     })
     //     setSkills(novaLista);
     // }
-
+    console.log(skills)
   return (
     <div className={styles.container}>
         <div className={styles.bemVindo}>
