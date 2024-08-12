@@ -11,7 +11,9 @@ import { ToastAndroid } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useFetchUser from '../../hooks/userHooks';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import ModalAtribuir from '../../components/ModalAtribuir/ModalAtribuir';
+import ModalAtribuir, { skillLevelType } from '../../components/ModalAtribuir/ModalAtribuir';
+import {ModalCadastrar} from '../../components/modalCadastrar/ModalCadastrar';
+import { styles } from './HomePageStyle';
 
 const HomePage: React.FC = () => {
   const navigation = useNavigation();
@@ -25,10 +27,10 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     setSkills(user.skills);
+    
   }, [user]);
 
   const handleLogout = () => {
-    // Remover dados do AsyncStorage
     AsyncStorage.removeItem('user');
     AsyncStorage.removeItem('token');
     navigation.navigate('Login');
@@ -45,7 +47,7 @@ const HomePage: React.FC = () => {
       setSkills(res.data.skills);
       ToastAndroid.show('Skill removida com sucesso', ToastAndroid.SHORT);
     } catch (err) {
-      ToastAndroid.show('Falha ao remover a skill', ToastAndroid.SHORT);
+      ToastAndroid.showWithGravity(err?.response?.data?.titulo, ToastAndroid.TOP, ToastAndroid.SHORT);
     }
   };
 
@@ -56,10 +58,12 @@ const HomePage: React.FC = () => {
       nivel: novoNivel,
     };
     try {
-      await atualizarNivel(info).then((res)=>fetchUser(user.id));
+      const res = await atualizarNivel(info);
+      fetchUser(user.id)
     } catch (err) {
-      ToastAndroid.show('Erro ao atualizar o nível da Skill', ToastAndroid.SHORT);
+      ToastAndroid.showWithGravity(err?.response?.data?.titulo, ToastAndroid.TOP, ToastAndroid.SHORT);
     }
+    // reloadSkills(user.skills)
   };
 
   const reloadSkills = (skills: any) => {
@@ -81,18 +85,21 @@ const HomePage: React.FC = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.buttonArea}>
-          <TouchableOpacity style={styles.button} onPress={()=> setDropdownSkill(!dropdownAtribuir)}>
+
+          {/* implementar caso haja tempo - prioridade 1  */}
+          {/* <TouchableOpacity style={styles.button} onPress={()=> setModalCadastrar(!modalCadastrar)}>
             <Text style={styles.TextButton}>Cadastrar Skill</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity style={styles.button} onPress={()=> setModalAtribuir(!modalAtribuir)}>
             <Text style={styles.TextButton}>Atribuir Skill</Text>
           </TouchableOpacity>
         </View>
       </View>
       <ScrollView style={styles.contentArea}>
-        {skills.map((skill: any) => (
+        <View style={{gap:30}}>
+        {skills.map((skill: skillLevelType) => (
           <CardSkill
-            key={skill.id}
+            key={skill.skill.id}
             skill={skill}
             handleAtualizar={handleAtualizarNivel}
             handleDeletar={handleDeleteSkill}
@@ -103,63 +110,18 @@ const HomePage: React.FC = () => {
             Nada por aqui... Tente atribuir uma skill!
           </Text>
         )}
+      </View>
       </ScrollView>
       {modalAtribuir && (
         <ModalAtribuir reload={reloadSkills} userId={user.id} close={() => setModalAtribuir(false)} />
       )}
-      {/* {modalCadastrar && (
+      {modalCadastrar && (
         <ModalCadastrar reload={reloadSkills} userId={user.id} close={() => setModalCadastrar(false)} />
-      )} */}
+      )}
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#070707ed',
-    padding: 16,
-  },
-  bemVindo: {
-    marginBottom: 20,
-  },
-  headerContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  welcomeText: {
-    color: '#fff',
-    fontSize: 20,
-  },
-  icon: {
-    color: '#fff',
-  },
-  contentArea: {
-    flex: 1,
-  },
-  renderError: {
-    textAlign: 'center',
-    color: '#ccc',
-    marginTop: 20,
-    textDecorationLine: 'underline',
-  },
-  buttonArea:{
-    flexDirection: 'row',
-    marginTop:10,
-    gap:140,
-  },
-  TextButton:{
-    color: '#fff',
-    fontSize: 16,
-  },
-  button:{
-    backgroundColor: '#60d4ea',
-    padding:5,
-    borderWidth:3,
-    borderColor:'#27c3e2f8',
-    borderRadius:23,
-  }
-});
+
 
 export default HomePage;

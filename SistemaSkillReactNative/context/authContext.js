@@ -15,7 +15,7 @@ function AuthProvider({ children }) {
                     setUser(JSON.parse(userLocal));
                 }
             } catch (error) {
-                console.error("Failed to load user from storage:", error);
+                console.error("Falha ao carregar Usuário: ", error);
             }
         };
 
@@ -25,7 +25,7 @@ function AuthProvider({ children }) {
     React.useEffect(() => {
         if (Object.keys(user).length > 0) {
             AsyncStorage.setItem('user', JSON.stringify(user)).catch(error => {
-                console.error("Failed to save user to storage:", error);
+                console.error("Falha ao carregar Usuário: ", error);
             });
         }
     }, [user]);

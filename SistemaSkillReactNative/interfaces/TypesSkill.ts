@@ -1,3 +1,5 @@
+import { skillLevelType } from "../components/ModalAtribuir/ModalAtribuir";
+
 export interface SkillType{
     id: number;
     nome: string;
@@ -6,7 +8,7 @@ export interface SkillType{
 }
 
 export interface CardSkillProps {
-    skill: SkillType;
+    skill: skillLevelType;
     handleAtualizar: (skill: number, novoNivel: number) => Promise<void>
     handleDeletar: (idSelecionado: number) => Promise<void>
   }
