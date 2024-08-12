@@ -9,6 +9,10 @@ export default function Card({props, handleDeletar, handleAtualizar}) {
     const nomeSkill = props.skill.nome
     const novoNome =  nomeSkill.length > 37 ? `${nomeSkill.substring(0, 37)}...` : nomeSkill;
 
+    React.useEffect(() => {
+      setNivel(props.skill.nivel);
+    }, [props.skill.nivel]);
+
     const removerSkill = () =>{
         handleDeletar(props.skill.id)
     }

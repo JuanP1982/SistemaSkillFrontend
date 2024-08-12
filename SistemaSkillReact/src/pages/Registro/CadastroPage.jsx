@@ -32,7 +32,7 @@ export const CadastroPage = () => {
       toast.success("Cadastro efetuado com sucesso! Redirecionando para o login")
       setTimeout(()=>navigate("/"),3000)
      })
-     .catch((err)=>toast.error('Houve um erro ao cadastrar-se no site'))
+     .catch((err)=>toast.error(err.response.data.titulo))
     
   }
 

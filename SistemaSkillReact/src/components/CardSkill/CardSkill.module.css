@@ -41,14 +41,16 @@
 .contentArea .title{
     font-size: 30px;
     margin-left: 6px;
+    word-wrap: break-word;
 }
   .contentArea p{
-    text-wrap: wrap; 
+    word-wrap: break-word;
     font-size: 20px;
     margin-left: 6px;
 }  
 
 .contentArea .descricao{
+    word-wrap: break-word;
     font-size: 15px;
     height: 18vh;
 }

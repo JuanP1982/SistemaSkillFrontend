@@ -19,3 +19,12 @@ export const cadastrarSkill = async (info,file) =>{
     }})
     return response
 }
+
+export const deletarSkill = async (id) =>{
+    const url = `/skills/${id}`
+    const response = await api.delete(url, {headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'multipart/form-data'
+    }})
+    return response
+}

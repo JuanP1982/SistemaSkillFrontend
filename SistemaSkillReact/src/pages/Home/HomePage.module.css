@@ -37,6 +37,33 @@
   position: absolute;
 }
 
+@media (max-width:768px) {
+  .dropdownSkill{
+    width: 19vw;
+    left: 50%;
+    top: 5.25%;
+  }
+
+  .dropdown{
+    width: 16vw;
+    left: 72.5%;
+    top: 5.25%;
+  }
+}
+@media (max-width:1024px) {
+  .dropdownSkill{
+    width: 19vw;
+    left: 45%;
+    top: 5.25%;
+  }
+
+  .dropdown{
+    width: 13vw;
+    left: 62%;
+    top: 5.25%;
+  }
+}
+
 
 .opcoes{
   display: flex;

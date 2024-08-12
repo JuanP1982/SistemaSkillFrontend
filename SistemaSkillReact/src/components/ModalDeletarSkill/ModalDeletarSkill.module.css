@@ -1,0 +1,115 @@
+.containerModal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fbf7f70f;
+    backdrop-filter: blur(5px);
+    width: auto;
+    overflow: none;
+}
+
+.conteudoModal{
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    flex-direction: column;
+    background-color: rgb(47, 51, 50);
+    backdrop-filter: blur(5px);
+    width: 50vw;
+    height: 60vh;
+    border-radius: 23px;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header h1{
+    font-size: 30px;
+}
+
+.header .closeIcon{
+    flex-grow: 2;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 1vh;
+    right: 1vw;
+    cursor: pointer;
+}
+
+.header .closeIcon:hover{
+    transition: 1000ms;
+    height: 30px;
+}
+
+.lista{
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    max-height: 100%;
+    overflow-y: auto;
+    gap: 10px;
+    margin-left: 10px;
+    
+}
+
+.listaContainer{
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    width: 100%;
+    /* height: auto; */
+    /* background-color: purple; */
+    border-bottom: 2px solid gray;
+}
+
+.listaConteudo{
+    display: flex;
+    flex-direction: row;
+    height: 17vh;
+    align-items: center;
+}
+
+.listaConteudo p {
+    font-size: 25px;
+    justify-self: center;
+    margin-left: 10px;
+}
+
+.imageBox{
+    display: flex;
+    /* background-color: aqua; */
+    width: 11vw;
+    height: 100%;
+}
+
+.imageBox img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.nomeBox{
+    display: flex;
+    flex-direction: row;
+    /* background-color: blueviolet; */
+    width: 34vw;
+}
+
+.iconeLixeiraArea {
+    display: flex;
+    margin-left: auto;
+    /* background-color: green; */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+

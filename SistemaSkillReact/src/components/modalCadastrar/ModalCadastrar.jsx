@@ -33,7 +33,9 @@ console.log(arquivo);
     e.preventDefault()
     cadastrarSkill(skill,arquivo)
     .then((res)=>toast.success(`A skill foi cadastrada com sucesso!`))
-    .catch((err)=>toast.error(ExceptionHook(err)))
+    .catch((err)=>toast.error(err.response.data.titulo)
+    )
+    // toast.error(ExceptionHook(err))
   }
 
   return (

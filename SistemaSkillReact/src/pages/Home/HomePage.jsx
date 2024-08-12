@@ -12,6 +12,7 @@ import { toast, ToastContainer } from 'react-toastify'
 import useFetchUser from '../../Hooks/UserHooks'
 import { ModalAtribuir } from '../../components/ModalAtribuir/ModalAtribuir'
 import { ModalCadastrar } from '../../components/modalCadastrar/ModalCadastrar'
+import { ModalDeletarSkill } from '../../components/ModalDeletarSkill/ModalDeletarSkill'
 
 
 export const HomePage = () => {
@@ -20,6 +21,7 @@ export const HomePage = () => {
     const {user, salvarUser} = useContext(AuthContext)
     const [modalAtribuir, setModalAtribuir] = React.useState(false)
     const [modalCadastrar, setModalCadastrar] = React.useState(false)
+    const [modalDeletar,setModalDeletar] = React.useState(false)
     const [skills, setSkills] = React.useState(user? user.skills: [])
     const [dropdownAtribuir, setDropdownAtribuir] = React.useState(false)
     const [dropdownSkill, setDropdownSkill] = React.useState(false)
@@ -48,6 +50,10 @@ export const HomePage = () => {
         setModalCadastrar(!modalCadastrar)
         setDropdownSkill(false)
     }
+    const handleModalDeletar = () =>{
+        setModalDeletar(!modalDeletar)
+        setDropdownSkill(false)
+    }
 
     const handleLogout = () =>{
         localStorage.removeItem('user')
@@ -63,7 +69,7 @@ export const HomePage = () => {
             salvarUser(res.data)
             setSkills(res.data.skills)
             toast.success('Skill removida com sucesso')
-        }).catch((err)=>toast.error('Falha ao remover a skill'))
+        }).catch((err)=>toast.error(err.response.data.titulo))
     }
 
     const reloadSkills = (skills) =>{
@@ -76,7 +82,7 @@ export const HomePage = () => {
             skillId:skill,
             nivel:novoNivel
           }
-          atualizarNivel(info).then((res)=>fetchUser(user.id)).catch((err)=>toast.error("Houve um erro ao atualizar o nivel da Skill"))
+          atualizarNivel(info).then((res)=>fetchUser(user.id)).catch((err)=>toast.error(err.response.data.titulo))
           
     }
     console.log(skills);
@@ -110,8 +116,9 @@ export const HomePage = () => {
                     <div className={styles.dropdownSkill}>
                         <ul className={styles.opcoesDropdown}>
                             <li onClick={handleModalCadastrar}>Cadastrar Skill</li>
-                            <li onClick={()=>alert('atualizar')}>Editar Skill</li>
-                            <li onClick={()=>alert('remover')}>Remover Skill</li>
+                            {/* implementar caso haja tempo - prioridade 1 */}
+                            {/* <li onClick={()=>alert('atualizar')}>Editar Skill</li> */}
+                            <li onClick={handleModalDeletar}>Remover Skill</li>
                         </ul>
                     </div>
                 )}
@@ -143,6 +150,12 @@ export const HomePage = () => {
                 <ModalCadastrar reload={reloadSkills} userId={user.id} close={handleModalCadastrar}/>
             </div>
         )}
+        {modalDeletar &&(
+            <div className={styles.modalAtribuir}>
+                <ModalDeletarSkill reload={reloadSkills} userId={user.id} close={handleModalDeletar}/>
+            </div>
+        )}
+
         <ToastContainer/>
     </div>
   )

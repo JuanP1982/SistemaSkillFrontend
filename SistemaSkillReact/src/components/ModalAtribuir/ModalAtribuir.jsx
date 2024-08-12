@@ -78,11 +78,10 @@ export const ModalAtribuir = ({close,userId,reload}) => {
             niveis:niveis
         }
         atribuirSkill(info).then((res)=>fetchUser(userId))
-        .catch((err)=>toast.error(ExceptionHook(err)))
+        .catch((err)=>toast.error(err.response.data.titulo))
         toast.success('Skills atribuidas com sucesso!')
         console.log("Skills 'novas'", user.skills);
-        setSkillsAtribuidas([])
-        reload(user.skills)        
+        setSkillsAtribuidas([])    
       }
 
       useEffect(() => {
@@ -139,7 +138,7 @@ export const ModalAtribuir = ({close,userId,reload}) => {
             </div>
         </div>
         </div>
-        <ToastContainer/>
+        {/* <ToastContainer/> */}
     </div>
   )
 }

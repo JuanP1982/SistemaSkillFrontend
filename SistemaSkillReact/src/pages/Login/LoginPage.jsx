@@ -48,7 +48,9 @@ export const Login = () => {
       salvarUser(res.data.usuario)
       localStorage.setItem('token', res.data.token)
       navigate('/home')
-    }).catch((err)=>toast.error(ExceptionHook(err)))
+    }).catch((err)=>toast.error(err.response.data.titulo)
+    )
+    // toast.error(ExceptionHook(err))
 
     salvarSenha === true?
     localStorage.setItem('senha',JSON.stringify({senha:btoa(userInfo.senha), salvar:true}))
@@ -77,7 +79,7 @@ export const Login = () => {
 
           <div className={styles.lembrarSenha}>
             <label ><input type="checkbox" defaultChecked={salvarSenha} onChange={()=>setSalvarSenha(!salvarSenha)} />Lembrar senha</label>
-            <a href="#">esqueceu sua senha?</a>
+            <a href="#">Esqueceu sua senha?</a>
           </div>
 
           <button type='submit'>Login</button>
